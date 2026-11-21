@@ -1,0 +1,176 @@
+/* Dex the folder, lifted from PROJECTS_NAVIGATION.html's own markup.
+   Light is the default and stays default regardless of the OS colour scheme.
+   Dark is an opt-in the settings toggle sets later via data-theme; it is never
+   forced by prefers-color-scheme. The accents (cheeks, plate) are pinned. */
+:root {
+    --color-bg-tertiary: #EFF1F5;
+    --color-text: #4C4F69;
+    --color-border: #7C7F93;
+    --color-cancel: #FFAB91;
+    --color-duotone-plate: #9FA8DA;
+}
+
+:root[data-theme="dark"] {
+    --color-bg-tertiary: #313244;
+    --color-text: #CDD6F4;
+    --color-border: #585B70;
+}
+
+html, body {
+    margin: 0;
+    height: 100%;
+    background: transparent;
+    overflow: hidden;
+}
+
+body {
+    font-family: system-ui, sans-serif;
+}
+
+.stage {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mascot {
+    position: relative;
+    display: inline-block;
+    width: 1em;
+    height: 0.85em;
+    font-size: 128px;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.mascot:active { cursor: grabbing; }
+
+.mascot-bob {
+    position: absolute;
+    inset: 0;
+}
+
+/* Idle is static: a transparent layered window recomposites its whole surface
+   every animation frame, so continuous motion costs ~50% of a core. Life comes
+   from a sparse blink, cursor eye-tracking, and interaction instead. */
+.mascot:hover .mascot-bob {
+    animation: mascot-bob 2.6s ease-in-out infinite;
+}
+
+.mascot-tab {
+    position: absolute;
+    top: 0;
+    left: 0.07em;
+    width: 0.4em;
+    height: 0.2em;
+    background: var(--color-duotone-plate);
+    border: max(1px, 0.02em) solid var(--color-border);
+    border-bottom: none;
+    border-radius: 0.05em 0.08em 0 0;
+}
+
+.mascot-body {
+    position: absolute;
+    top: 0.13em;
+    left: 0;
+    width: 1em;
+    height: 0.72em;
+    background: var(--color-bg-tertiary);
+    border: max(1px, 0.02em) solid var(--color-border);
+    border-radius: 0.09em;
+    box-shadow: 0.045em 0.045em 0 0 var(--color-duotone-plate);
+    transition: transform 0.2s ease;
+}
+
+.mascot:hover .mascot-body {
+    transform: rotate(-3deg) translateY(-0.01em);
+}
+
+.mascot-eye {
+    position: absolute;
+    top: 0.3em;
+    width: 0.1em;
+    height: 0.12em;
+    background: var(--color-text);
+    border-radius: 50%;
+    will-change: transform;
+    translate: calc(var(--look-x, 0) * 0.02em) calc(var(--look-y, 0) * 0.015em);
+}
+
+/* A blink is an instant compositor-only transform on the permanently promoted
+   eye layer, driven sparsely from JS. No transition: on a transparent window the
+   extra in-between frames push idle CPU over budget (measured 2.0% vs 1.1%). */
+.mascot.blink .mascot-eye { transform: scaleY(0.12); }
+
+.mascot-eye--l { left: 0.27em; }
+.mascot-eye--r { right: 0.27em; }
+
+.mascot-eye::after {
+    content: '';
+    position: absolute;
+    top: 0.02em;
+    left: 0.02em;
+    width: 0.035em;
+    height: 0.035em;
+    background: #fff;
+    border-radius: 50%;
+}
+
+.mascot-cheek {
+    position: absolute;
+    top: 0.45em;
+    width: 0.1em;
+    height: 0.055em;
+    border-radius: 50%;
+    background: var(--color-cancel);
+    opacity: 0.7;
+}
+
+.mascot-cheek--l { left: 0.15em; }
+.mascot-cheek--r { right: 0.15em; }
+
+.mascot-smile {
+    position: absolute;
+    top: 0.47em;
+    left: 50%;
+    width: 0.14em;
+    height: 0.07em;
+    margin-left: -0.07em;
+    border-bottom: max(1px, 0.025em) solid var(--color-text);
+    border-radius: 0 0 0.12em 0.12em;
+}
+
+@keyframes mascot-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-0.035em); }
+}
+
+@keyframes mascot-blink {
+    0%, 93%, 100% { transform: scaleY(1); }
+    96% { transform: scaleY(0.08); }
+}
+
+.mascot.boing .mascot-bob {
+    animation: mascot-boing 0.5s ease;
+}
+
+@keyframes mascot-boing {
+    0% { transform: scale(1, 1); }
+    30% { transform: scale(1.1, 0.8); }
+    55% { transform: scale(0.92, 1.1); }
+    75% { transform: scale(1.04, 0.96); }
+    100% { transform: scale(1, 1); }
+}
+
+.mascot.asleep .mascot-bob,
+.mascot.asleep .mascot-eye {
+    animation-play-state: paused;
+}
+.mascot.asleep .mascot-eye { transition: none; }
+
+@media (prefers-reduced-motion: reduce) {
+    .mascot-bob, .mascot-eye { animation: none; transition: none; }
+    .mascot-body { transition: none; }
+}

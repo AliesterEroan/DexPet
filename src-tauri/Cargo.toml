@@ -1,0 +1,25 @@
+[package]
+name = "dexpet"
+version = "0.1.0"
+description = "Dex, the desktop folder buddy"
+authors = ["AliesterEroan"]
+edition = "2021"
+rust-version = "1.77.2"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["tray-icon"] }
+tauri-plugin-single-instance = "2"
+serde_json = "1"
+
+[target.'cfg(windows)'.dependencies]
+webview2-com = "0.39"
+
+[profile.release]
+codegen-units = 1
+lto = "fat"
+opt-level = "s"
+panic = "abort"
+strip = true

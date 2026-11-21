@@ -1,0 +1,60 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "DexPet",
+  "version": "0.1.0",
+  "identifier": "com.aliestereroan.dexpet",
+  "build": {
+    "frontendDist": "../frontend"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "label": "pet",
+        "title": "Dex",
+        "url": "index.html",
+        "width": 200,
+        "height": 200,
+        "transparent": true,
+        "decorations": false,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "resizable": false,
+        "shadow": false,
+        "center": true
+      },
+      {
+        "label": "panel",
+        "title": "DexPet",
+        "url": "panel.html",
+        "width": 420,
+        "height": 560,
+        "visible": false,
+        "center": true,
+        "resizable": true
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; img-src 'self' asset: http://asset.localhost; style-src 'self' 'unsafe-inline'; connect-src ipc: http://ipc.localhost"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["nsis"],
+    "publisher": "AliesterEroan",
+    "copyright": "AliesterEroan. Dex is drawn from this app's own markup.",
+    "category": "Utility",
+    "shortDescription": "Dex, the desktop folder buddy",
+    "longDescription": "An offline desktop companion: Dex the folder lives on your desktop, finds your files, keeps your reminders, and watches your coding agents - all locally, with network features strictly opt-in.",
+    "icon": ["icons/icon.ico", "icons/icon.png"],
+    "windows": {
+      "webviewInstallMode": {
+        "type": "downloadBootstrapper",
+        "silent": true
+      },
+      "nsis": {
+        "installMode": "currentUser"
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+# Rust build output
+target/
+src-tauri/target/
+gen/
+
+# Node (if added later)
+node_modules/
+dist/
+
+# Logs & local data
+*.log
+logs/
+.env*
+
+# Internal planning/verification docs — never publish
+tasks/
+verification/
