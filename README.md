@@ -4,6 +4,8 @@
   <img src="src-tauri/icons/icon.png" alt="DexPet Icon" width="128">
 </div>
 
+> **Early development** — core pet and trick panel work; several tricks are still landing. Expect rough edges and no releases yet.
+>
 > A desktop pet for Windows — Dex, the folder mascot, lives on your desktop as a transparent always-on-top companion with tricks, a panel, and a tray. Offline-first and privacy-pinned: zero network unless you explicitly enable it.
 
 ---
@@ -51,9 +53,14 @@
 - Rust toolchain + Node.js — only needed to build from source
 
 ### Steps
-1. Download `DexPet_x.x.x_x64-setup.exe` from [Releases](https://github.com/AliesterEroan/DexPet/releases)
-2. Run the installer (per-user, no admin needed)
-3. Launch **DexPet** — Dex appears on the desktop, tray icon owns the app
+There are no releases yet — build from source:
+
+```sh
+cd src-tauri
+cargo tauri dev    # or: cargo tauri build
+```
+
+Release installers will appear on the [Releases](https://github.com/AliesterEroan/DexPet/releases) page once the app is further along.
 
 To build from source instead:
 ```sh
